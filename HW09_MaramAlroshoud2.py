@@ -129,7 +129,7 @@ class Instructor:
 
 
 def main():
-    dir = '/Users/jrr/Downloads/Repository'
+    dir = "/Users/MaramAlrshoud/Documents/Universites files/Stevens/Spring 2019/SSW-810A/homeworks"
     print(University(dir))
 
 main()
@@ -139,7 +139,7 @@ class testing(unittest.TestCase):
 
     def test_classes(self):
 
-        dir='/Users/jrr/Downloads/Repository'
+        dir="/Users/MaramAlrshoud/Documents/Universites files/Stevens/Spring 2019/SSW-810A/homeworks"
 
         t1= University(dir)
 
