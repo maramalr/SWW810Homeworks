@@ -99,7 +99,7 @@ class Student:
     def details(self):
         #provide all fields of each std as a list for creating table/test
 
-        return[self.CWID, self.Name, sorted(self.classTaken.keys())]
+        return[self.CWID, self.Name,sorted(self.classTaken.keys())]
 
     @staticmethod
     def fields_name():
@@ -143,8 +143,6 @@ class testing(unittest.TestCase):
 
         t1= University(dir)
 
-        dicStudents = dict()
-        dictInstructor = dict()
         self.maxDiff = None
         
         std_result = [['10103', 'Baldwin, C', ['CS 501', 'SSW 564', 'SSW 567', 'SSW 687']], 
