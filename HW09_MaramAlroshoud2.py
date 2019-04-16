@@ -2,6 +2,8 @@ from prettytable import PrettyTable
 from collections import defaultdict
 import unittest
 import os
+import sqlite3
+
 
 class University:
 
@@ -98,13 +100,20 @@ class University:
     
     def insturctor_table(self):
 
+        DB_path = "/Users/MaramAlrshoud/Documents/Universites/Stevens/Spring2019/SSW-810A/homeworks/hw11/810_startup.db"
+        db = sqlite3.connect(DB_path)
+
+        query = """SELECT i.CWID, i.Name, i.Dept, g.Course, count(g.Course) as students from instructors i
+                   JOIN grades g ON i.CWID = g.Instructor_CWID group by g.Course order by students desc"""
+
         pt_inst = PrettyTable(field_names= Instructor.fields_name())
 
-        for i in self.insturctor_container.values():
-            for j in i.ints_details():
-                pt_inst.add_row(j)
+        for row in db.execute(query):
+
+            pt_inst.add_row(row)
 
         print(pt_inst)
+
 
     def majors_table(self):
 
@@ -181,7 +190,6 @@ class Instructor:
         self.taughtCourses = defaultdict(int)
 
     def add_student(self, course):
-
         
         self.taughtCourses[course] += 1  #key is the Name of the course and value is number of stds
 
@@ -212,7 +220,7 @@ class Major:
         return ['Dept', 'Required', 'Elective']
 
 def main():
-    dir = "/Users/MaramAlrshoud/Documents/Universites files/Stevens/Spring 2019/SSW-810A/homeworks"
+    dir = "/Users/MaramAlrshoud/Documents/Universites/Stevens/Spring2019/SSW-810A/homeworks"
     print(University(dir))
 
 main()
@@ -221,7 +229,7 @@ class testing(unittest.TestCase):
 
     def test_classes(self):
 
-        dir="/Users/MaramAlrshoud/Documents/Universites files/Stevens/Spring 2019/SSW-810A/homeworks"
+        dir="/Users/MaramAlrshoud/Documents/Universites/Stevens/Spring2019/SSW-810A/homeworks"
 
         t1= University(dir)
         self.maxDiff = None
