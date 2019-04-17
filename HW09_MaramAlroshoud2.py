@@ -229,6 +229,12 @@ class testing(unittest.TestCase):
 
     def test_classes(self):
 
+        DB_path = "/Users/MaramAlrshoud/Documents/Universites/Stevens/Spring2019/SSW-810A/homeworks/hw11/810_startup.db"
+        db = sqlite3.connect(DB_path)
+
+        query = """SELECT i.CWID, i.Name, i.Dept, g.Course, count(g.Course) as students from instructors i
+                   JOIN grades g ON i.CWID = g.Instructor_CWID group by g.Course order by students desc"""
+
         dir="/Users/MaramAlrshoud/Documents/Universites/Stevens/Spring2019/SSW-810A/homeworks"
 
         t1= University(dir)
@@ -245,18 +251,16 @@ class testing(unittest.TestCase):
                       ['11714', 'Morton, A', 'SYEN', ['SYS 611' , 'SYS 645'], ['SYS 671', 'SYS 612', 'SYS 800'], ['SSW 810', 'SSW 540', 'SSW 565']], 
                       ['11788', 'Fuller, E', 'SYEN', ['SSW 540'], ['SYS 671', 'SYS 612', 'SYS 800'], []]]
 
-        instruct_result = [['98765', 'Einstein, A', 'SFEN', 'SSW 567', 4], 
-                           ['98765', 'Einstein, A', 'SFEN', 'SSW 540', 3],
-                           ['98764', 'Feynman, R', 'SFEN', 'SSW 564', 3],
-                           ['98764', 'Feynman, R', 'SFEN', 'SSW 687', 3],
-                           ['98764', 'Feynman, R', 'SFEN', 'CS 501', 1],  
-                           ['98764', 'Feynman, R', 'SFEN', 'CS 545', 1], 
-                           ['98763', 'Newton, I', 'SFEN', 'SSW 555', 1],
-                           ['98763', 'Newton, I', 'SFEN', 'SSW 689', 1], 
-                           ['98760', 'Darwin, C', 'SYEN', 'SYS 800', 1],
-                           ['98760', 'Darwin, C', 'SYEN', 'SYS 750', 1],
-                           ['98760', 'Darwin, C', 'SYEN', 'SYS 611', 2],
-                           ['98760', 'Darwin, C', 'SYEN', 'SYS 645', 1]]
+        instruct_result = [('98765', 'Einstein, A', 'SFEN', 'SSW 567', 4), 
+                           ('98765', 'Einstein, A', 'SFEN', 'SSW 540', 3),
+                           ('98764', 'Feynman, R', 'SFEN', 'SSW 564', 3),
+                           ('98764', 'Feynman, R', 'SFEN', 'SSW 687', 3),
+                           ('98760', 'Darwin, C', 'SYEN', 'SYS 611', 2),
+                           ('98763', 'Newton, I', 'SFEN', 'SSW 555', 1),
+                           ('98763', 'Newton, I', 'SFEN', 'SSW 689', 1), 
+                           ('98760', 'Darwin, C', 'SYEN', 'SYS 645', 1),
+                           ('98760', 'Darwin, C', 'SYEN', 'SYS 750', 1),
+                           ('98760', 'Darwin, C', 'SYEN', 'SYS 800', 1)]
         
         major_result = [['SFEN', ['SSW 540', 'SSW 564', 'SSW 555', 'SSW 567'],['CS 501', 'CS 513', 'CS 545']],
                        ['SYEN', ['SYS 671', 'SYS 612', 'SYS 800'], ['SSW 810', 'SSW 540', 'SSW 565']]]
@@ -264,7 +268,7 @@ class testing(unittest.TestCase):
 
 
         listStudents = [student.details() for student in t1.student_container.values()]
-        listInstructors = [detail for instructor in t1.insturctor_container.values() for detail in instructor.ints_details()]
+        listInstructors = [row for row in db.execute(query)]
         ListMajors = [major.details() for major in t1.all_majors.values()]
 
         
