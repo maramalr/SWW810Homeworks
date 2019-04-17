@@ -103,8 +103,9 @@ class University:
         DB_path = "/Users/MaramAlrshoud/Documents/Universites/Stevens/Spring2019/SSW-810A/homeworks/hw11/810_startup.db"
         db = sqlite3.connect(DB_path)
 
-        query = """SELECT i.CWID, i.Name, i.Dept, g.Course, count(g.Course) as students from instructors i
-                   JOIN grades g ON i.CWID = g.Instructor_CWID group by g.Course order by students desc"""
+        query = """SELECT i.CWID, i.Name, i.Dept, g.Course, count(g.Student_CWID) as students from instructors i
+                   JOIN grades g ON i.CWID = g.Instructor_CWID
+                   group by g.Course order by students desc"""
 
         pt_inst = PrettyTable(field_names= Instructor.fields_name())
 
@@ -232,8 +233,9 @@ class testing(unittest.TestCase):
         DB_path = "/Users/MaramAlrshoud/Documents/Universites/Stevens/Spring2019/SSW-810A/homeworks/hw11/810_startup.db"
         db = sqlite3.connect(DB_path)
 
-        query = """SELECT i.CWID, i.Name, i.Dept, g.Course, count(g.Course) as students from instructors i
-                   JOIN grades g ON i.CWID = g.Instructor_CWID group by g.Course order by students desc"""
+        query = """SELECT i.CWID, i.Name, i.Dept, g.Course, count(g.Student_CWID) as students from instructors i
+                   JOIN grades g ON i.CWID = g.Instructor_CWID
+                   group by g.Course order by students desc"""
 
         dir="/Users/MaramAlrshoud/Documents/Universites/Stevens/Spring2019/SSW-810A/homeworks"
 
